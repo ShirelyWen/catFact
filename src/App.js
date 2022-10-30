@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FETCH_FACT } from "./actions";
+import CatFact from "./components/CatFact";
+import CatButton from "./UI/CatButton";
+import classes from "./App.module.css";
 
 function App() {
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state.counter);
+
+  useEffect(() => {
+    dispatch({ type: FETCH_FACT });
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <div className={classes.container}>
+        <CatFact />
+        <div className={classes.buttonContainer}>
+          <CatButton />
+          <p>Counter: {counter}</p>
+        </div>
+      </div>
+    </Fragment>
   );
 }
 
